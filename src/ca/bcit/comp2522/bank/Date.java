@@ -8,9 +8,9 @@ package ca.bcit.comp2522.bank;
    * @version 1.0
      */
 public class Date {
-    private int year;
-    private int month;
-    private int day;
+    private final int year;
+    private final int month;
+    private final int day;
 
     private static final int MIN_YEAR = 1800; // Minimum valid year
     private static final int MAX_YEAR = 2025; // Maximum valid year
@@ -69,7 +69,7 @@ public class Date {
 
     /**
     * Gets the day of this date
-    * @returns day
+    * @return day
      */
     public int getDay() {
         return day;
@@ -77,7 +77,7 @@ public class Date {
 
     /**
     * Returns this date in the format YYYY-MM-DD
-    * @returns  A string of the date in ISO format
+    * @return  A string of the date in ISO format
      */
     public String getYYYYMMDD() {
         return String.format("%04d-%02d-%02d", year, month, day);
