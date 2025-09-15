@@ -7,12 +7,12 @@ package ca.bcit.comp2522.bank;
  */
 
 public class BankAccount {
-    private BankClient client;
-    private String accountNumber; // 6 or 7 characters
-    private Date accountOpened;
+    private final BankClient client;
+    private final String accountNumber; // 6 or 7 characters
+    private final Date accountOpened;
     private Date accountClosed; // can be null
     private double balance;
-    private int pin;
+    private final int pin;
 
     /**
      * Creates a new bank account
@@ -63,9 +63,8 @@ public class BankAccount {
      * @return a formatted string of account details
      */
     public String getDetails() {
-        return "Account #:" + accountNumber +
-                "Balance: $" + balance +
-                "Opened: " + accountOpened.getYYYYMMDD() +
-                ((accountClosed == null) ? "still open" : accountClosed.getYYYYMMDD());
+        String status = (accountClosed == null) ? "still open" : "Closed on " + accountClosed.getYYYYMMDD();
+        return client.getName().getFullName() + " has $" + balance + " USD in account #" + accountNumber
+                + " opened on " + accountOpened.getYYYYMMDD() + " and " + status + ".";
     }
 }
