@@ -10,7 +10,7 @@ public class BankAccount {
     private final BankClient client;
     private final String accountNumber; // 6 or 7 characters
     private final Date accountOpened;
-    private Date accountClosed; // can be null
+    private final Date accountClosed; // can be null
     private double balance;
     private final int pin;
 
