@@ -76,7 +76,7 @@ public class Date {
     }
 
     /**
-    * Returns this date in the format YYYY-MM-DD
+    * return this date in the format YYYY-MM-DD
     * @return  A string of the date in ISO format
      */
     public String getYYYYMMDD() {
