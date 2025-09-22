@@ -1,109 +1,95 @@
 package ca.bcit.comp2522.bank;
 
 /**
- * Represents a Person's Name with first and last names.
- * Provides methods to get the first/last name, initials.
- * properly capitalized full, and reversed name.
+ * Represents a person's name with first and last name.
+ * Provides formatted name strings and initials.
  *
- * @author Sukhraj Sandhar
- * @version 1.0
+ * Author: Sukhraj Sandhar
+ * Version: 1.0
  */
-
 public class Name {
 
-    private final String firstName;
-    private final String lastName;
+    private static final int MAX_LENGTH = 45;
+
+    private final String first;
+    private final String last;
 
     /**
-     * Constructs a Name object with first and last names.
-     * Performs validation: names cannot be null, blank, longer than 45 characters,
-     * or contain the word "admin" (case-insensitive)
+     * Constructs a Name object with validation.
      *
-     * @param firstName the first name of the person
-     * @param lastName the last name of the person
-     * @throws IllegalArgumentException if validation fails
+     * @param first first name (not null, blank, >45 chars, or containing "admin")
+     * @param last  last name (not null, blank, >45 chars, or containing "admin")
+     * @throws IllegalArgumentException if any name is invalid
      */
-    public Name(String firstName, String lastName) {
-        // check null
-        if (firstName == null || lastName == null) {
-            throw new IllegalArgumentException("Names cannot be null");
+    public Name(String first, String last) {
+        if (first == null || first.isBlank()
+                || first.length() > MAX_LENGTH
+                || first.toLowerCase().contains("admin")) {
+            throw new IllegalArgumentException("Invalid first name");
         }
 
-        // trim spaces
-        firstName = firstName.trim();
-        lastName = lastName.trim();
-
-        // check blank
-        if (firstName.isEmpty() || lastName.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be blank");
-
+        if (last == null || last.isBlank()
+                || last.length() > MAX_LENGTH
+                || last.toLowerCase().contains("admin")) {
+            throw new IllegalArgumentException("Invalid last name");
         }
 
-        // check length (max 45)
-        if (firstName.length() > 45 || lastName.length() > 45) {
-            throw new IllegalArgumentException("Names too long");
-        }
+        this.first = capitalize(first);
+        this.last = capitalize(last);
+    }
 
-        // check "admin" anywhere (case-insensitive)
-        if (firstName.toLowerCase().contains("admin") || lastName.toLowerCase().contains("admin")) {
-            throw new IllegalArgumentException("Names cannot contain 'admin'");
-        }
-
-        // finally save
-        this.firstName = firstName;
-        this.lastName = lastName;
+    /**
+     * Capitalizes the first letter and lowercases the rest.
+     *
+     * @param str input string
+     * @return capitalized string
+     */
+    private String capitalize(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
 
     /**
      * Returns the first name.
-     * @return the first name
+     *
+     * @return first name
      */
-    public String getFirstName() {
-        return firstName;
+    public String getFirst() {
+        return first;
     }
 
     /**
      * Returns the last name.
-     * @return the last name
+     *
+     * @return last name
      */
-    public String getLastName() {
-        return lastName;
+    public String getLast() {
+        return last;
     }
 
     /**
-     * Returns the initials of the person in the format "F.L." (uppercase letters with dots).
-     * Example: "Tiger Woods" -> "T.W."
+     * Returns the initials, e.g., "AE" for Albert Einstein.
+     *
      * @return initials string
      */
     public String getInitials() {
-        String initials = Character.toUpperCase(firstName.charAt(0)) + "."
-                        + Character.toUpperCase(lastName.charAt(0)) + ".";
-        return initials;
+        return first.charAt(0) + "" + last.charAt(0);
     }
 
     /**
-     * Returns the full name with proper capitalization.
-     * First letter of each name is uppercase, the rest are lowercase.
-     * Example: "tigER wooDS" -> "Tiger Woods"
+     * Returns the full name in "First Last" format.
+     *
      * @return full name string
      */
     public String getFullName() {
-        String fullName = String.valueOf(Character.toUpperCase(firstName.charAt(0)))
-                        + firstName.substring(1).toLowerCase()
-                        + " "
-                        + String.valueOf(Character.toUpperCase(lastName.charAt(0)))
-                        + lastName.substring(1).toLowerCase();
-        return fullName;
+        return first + " " + last;
     }
 
     /**
-     * Returns the full name reversed character by character
-     * Example: "tigER wooDS" -> "SDoow REgit"
-     * @return reversed full name string
+     * Returns the name in "Last, First" format.
+     *
+     * @return reversed name string
      */
     public String getReverseName() {
-        String combined = firstName + " " + lastName;
-        String reversed = new StringBuilder(combined).reverse().toString();
-        return reversed;
+        return last + ", " + first;
     }
 }

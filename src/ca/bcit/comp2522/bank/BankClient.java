@@ -1,93 +1,80 @@
 package ca.bcit.comp2522.bank;
 
 /**
- * Represents a Bank Client with name, birth/death dates, signup date, and a unique client ID.
- * Provides methods to get client details and check if alive.
+ * Represents a bank client with personal and account details.
+ * Supports alive/deceased status and provides formatted client details.
  *
- * @author Sukhraj Sandhar
- * @version 1.0
+ * Author: Sukhraj Sandhar
+ * Version: 1.0
  */
 public class BankClient {
 
-    private final Name name;        // Person's name
-    private final Date birthDate;   // Birthdate
-    private final Date deathDate;   // Can be null if alive
-    private final Date signupDate;  // Date client joined the bank
-    private final String clientID;  // 6 or 7 digit string
+    private final Name name;
+    private final Date birthDate;
+    private final Date deathDate;
+    private final String clientId;
+    private final Date signupDate;
 
     /**
      * Constructs a BankClient.
      *
-     * @param name the Name object
-     * @param birthDate Date of birth
-     * @param deathDate Date of death (can be null)
-     * @param signupDate Date the client joined the bank
-     * @param clientID unique 6 or 7 character string
-     * @throws IllegalArgumentException if any required argument is invalid
+     * @param name       the client's Name object
+     * @param birthDate  the client's birth date
+     * @param deathDate  the client's date of death (null if alive)
+     * @param signupDate the date the client signed up
+     * @param clientId   unique client ID (6 or 7 digits)
+     * @throws IllegalArgumentException if clientId is null or not 6-7 digits
      */
-    public BankClient(Name name, Date birthDate, Date deathDate, Date signupDate, String clientID) {
-        if (name == null || birthDate == null || signupDate == null) {
-            throw new IllegalArgumentException("Name, birth date, and signup date cannot be null");
-        }
-
-        if (clientID == null || !(clientID.length() == 6 || clientID.length() == 7)) {
-            throw new IllegalArgumentException("Client ID must be 6 or 7 characters");
+    public BankClient(
+            Name name,
+            Date birthDate,
+            Date deathDate,
+            Date signupDate,
+            String clientId
+    ) {
+        if (clientId == null || !clientId.matches("\\d{6,7}")) {
+            throw new IllegalArgumentException("Client ID must be 6 or 7 digits.");
         }
 
         this.name = name;
         this.birthDate = birthDate;
-        this.deathDate = deathDate; // can be null
+        this.deathDate = deathDate;
         this.signupDate = signupDate;
-        this.clientID = clientID;
+        this.clientId = clientId;
     }
 
+    /**
+     * Returns the client's Name object.
+     *
+     * @return Name object
+     */
     public Name getName() {
         return name;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public Date getDeathDate() {
-        return deathDate;
-    }
-
-    public Date getSignupDate() {
-        return signupDate;
-    }
-
-    public String getClientID() {
-        return clientID;
-    }
-
     /**
-     * Checks if the client is alive (deathDate is null).
-     * @return true if alive, false otherwise
+     * Checks whether the client is alive.
+     *
+     * @return true if alive, false if deceased
      */
     public boolean isAlive() {
         return deathDate == null;
     }
 
     /**
-     * Returns client details in a formatted string suitable for the lab.
+     * Returns formatted client details including full name, ID, birth date,
+     * status, and signup date.
+     *
      * @return formatted details string
      */
     public String getDetails() {
-        String status;
-        if (isAlive()) {
-            status = "alive";
-        } else {
-            status = "died " + deathDate.getDayOfWeek() + ", "
-                    + deathDate.getMonth() + " "
-                    + deathDate.getDay() + ", "
-                    + deathDate.getYear();
-        }
+        String status = isAlive()
+                ? "Alive"
+                : "Deceased on " + deathDate.getFormattedDate();
 
-        return name.getFullName() + " client #" + clientID + " (" + status + ") joined the bank on "
-                + signupDate.getDayOfWeek() + ", "
-                + signupDate.getMonth() + " "
-                + signupDate.getDay() + ", "
-                + signupDate.getYear();
+        return name.getFullName()
+                + " (Client #" + clientId + "), born " + birthDate.getFormattedDate()
+                + ", " + status
+                + ", signed up on " + signupDate.getFormattedDate();
     }
 }

@@ -1,8 +1,28 @@
 package ca.bcit.comp2522.bank;
 
+/**
+ * Demonstrates the Banking System by creating clients and accounts.
+ * Prints formatted details for lab simulation.
+ *
+ * This class initializes several BankClient and BankAccount objects,
+ * performs withdrawals, and prints the details of each client and account
+ * in a readable format.
+ *
+ * Author: Sukhraj Sandhar, Jaiden Yhang
+ * Version: 1.0
+ */
 public class Main {
+
+    /**
+     * Main entry point for the banking simulation.
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
-        // === Albert Einstein ===
+
+        // -----------------------
+        // Albert Einstein
+        // -----------------------
         Name einsteinName = new Name("Albert", "Einstein");
         BankClient einsteinClient = new BankClient(
                 einsteinName,
@@ -11,23 +31,21 @@ public class Main {
                 new Date(1900, 1, 1),
                 "123456"
         );
-        BankAccount einsteinAccount = new BankAccount(einsteinClient,
-                "abc123",
+        BankAccount einsteinAccount = new BankAccount(
+                einsteinClient,
+                "123456",
                 1000,
                 new Date(1900, 1, 1),
+                true,
+                new Date(1950, 10, 14),
                 3141
         );
         einsteinAccount.withdraw(100);
+        printClientAccount(einsteinClient, einsteinAccount);
 
-        System.out.println("Albert Einstein:");
-        System.out.println("Initials: " + einsteinName.getInitials());
-        System.out.println("Full name: " + einsteinName.getFullName());
-        System.out.println("Reversed name: " + einsteinName.getReverseName());
-        System.out.println("Client details: " + einsteinClient.getDetails());
-        System.out.println("Account details: " + einsteinAccount.getDetails());
-        System.out.println();
-
-        // === Nelson Mandela ===
+        // -----------------------
+        // Nelson Mandela
+        // -----------------------
         Name mandelaName = new Name("Nelson", "Mandela");
         BankClient mandelaClient = new BankClient(
                 mandelaName,
@@ -36,70 +54,78 @@ public class Main {
                 new Date(1994, 5, 10),
                 "654321"
         );
-        BankAccount mandelaAccount = new BankAccount(mandelaClient,
+        BankAccount mandelaAccount = new BankAccount(
+                mandelaClient,
                 "654321",
                 2000,
                 new Date(1994, 5, 10),
+                false,
+                null,
                 4664
         );
         mandelaAccount.withdraw(200);
+        printClientAccount(mandelaClient, mandelaAccount);
 
-        System.out.println("Nelson Mandela:");
-        System.out.println("Initials: " + mandelaName.getInitials());
-        System.out.println("Full name: " + mandelaName.getFullName());
-        System.out.println("Reversed name: " + mandelaName.getReverseName());
-        System.out.println("Client details: " + mandelaClient.getDetails());
-        System.out.println("Account details: " + mandelaAccount.getDetails());
-        System.out.println();
-
-        // === Frida Kahlo ===
+        // -----------------------
+        // Frida Kahlo
+        // -----------------------
         Name kahloName = new Name("Frida", "Kahlo");
         BankClient kahloClient = new BankClient(
                 kahloName,
                 new Date(1907, 7, 6),
                 new Date(1954, 7, 13),
                 new Date(1940, 1, 1),
-                "frd123"
-                );
-        BankAccount kahloAccount = new BankAccount(kahloClient,
-                "frd123",
+                "123457"
+        );
+        BankAccount kahloAccount = new BankAccount(
+                kahloClient,
+                "123457",
                 500,
                 new Date(1940, 1, 1),
+                true,
+                new Date(1954, 7, 13),
                 1907
         );
         kahloAccount.withdraw(50);
+        printClientAccount(kahloClient, kahloAccount);
 
-        System.out.println("Frida Kahlo:");
-        System.out.println("Initials: " + kahloName.getInitials());
-        System.out.println("Full name: " + kahloName.getFullName());
-        System.out.println("Reversed name: " + kahloName.getReverseName());
-        System.out.println("Client details: " + kahloClient.getDetails());
-        System.out.println("Account details: " + kahloAccount.getDetails());
-        System.out.println();
-
-        // === Jackie Chan ===
+        // -----------------------
+        // Jackie Chan
+        // -----------------------
         Name chanName = new Name("Jackie", "Chan");
         BankClient chanClient = new BankClient(
                 chanName,
                 new Date(1954, 4, 7),
-                null, // still alive
+                null,
                 new Date(1980, 10, 1),
-                "chan789"
+                "123458"
         );
-        BankAccount chanAccount = new BankAccount(chanClient,
-                "chan789",
+        BankAccount chanAccount = new BankAccount(
+                chanClient,
+                "123458",
                 3000,
                 new Date(1980, 10, 1),
+                false,
+                null,
                 1954
         );
         chanAccount.withdraw(500);
+        printClientAccount(chanClient, chanAccount);
+    }
 
-        System.out.println("Jackie Chan:");
-        System.out.println("Initials: " + chanName.getInitials());
-        System.out.println("Full name: " + chanName.getFullName());
-        System.out.println("Reversed name: " + chanName.getReverseName());
-        System.out.println("Client details: " + chanClient.getDetails());
-        System.out.println("Account details: " + chanAccount.getDetails());
+    /**
+     * Prints formatted details for a given client and account.
+     *
+     * @param client  the BankClient object
+     * @param account the BankAccount object
+     */
+    private static void printClientAccount(BankClient client, BankAccount account) {
+        System.out.println(client.getName().getFullName() + ":");
+        System.out.println("Initials: " + client.getName().getInitials());
+        System.out.println("Full name: " + client.getName().getFullName());
+        System.out.println("Reversed name: " + client.getName().getReverseName());
+        System.out.println("Client details: " + client.getDetails());
+        System.out.println("Account details: " + account.getDetails());
         System.out.println();
     }
 }
